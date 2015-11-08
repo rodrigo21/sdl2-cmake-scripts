@@ -1,4 +1,4 @@
-# Locate SDL_mixer library
+# Locate SDL2_mixer library
 #
 # This module defines:
 #

@@ -1,4 +1,4 @@
-# Locate SDL_net library
+# Locate SDL2_net library
 #
 # This module defines:
 #
