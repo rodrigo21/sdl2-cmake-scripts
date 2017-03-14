@@ -37,8 +37,9 @@ find_path(SDL2_IMAGE_INCLUDE_DIR SDL_image.h
     ENV SDL2IMAGEDIR
     ENV SDL2DIR
   PATH_SUFFIXES SDL2
-                # path suffixes to search inside ENV{SDL2DIR}
-                include/SDL2 include
+  # path suffixes to search inside ENV SDL2DIR
+  include/SDL2 include
+  PATHS ${SDL2_PATH}
 )
 
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -53,6 +54,7 @@ find_library(SDL2_IMAGE_LIBRARY
     ENV SDL2IMAGEDIR
     ENV SDL2DIR
   PATH_SUFFIXES lib ${VC_LIB_PATH_SUFFIX}
+  PATHS ${SDL2_PATH}
 )
 
 if(SDL2_IMAGE_INCLUDE_DIR AND EXISTS "${SDL2_IMAGE_INCLUDE_DIR}/SDL_image.h")

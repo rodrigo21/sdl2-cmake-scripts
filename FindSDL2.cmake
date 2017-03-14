@@ -47,7 +47,7 @@
 #
 #
 # $SDL2DIR is an environment variable that would correspond to the
-# ./configure --prefix=$SDL2DIR used in building SDL2.  l.e.galup  9-20-02
+# ./configure --prefix=$SDL2DIR used in building SDL2.
 #
 # Modified by Eric Wing.
 # Added code to assist with automated building by using environmental
@@ -102,16 +102,16 @@ find_path(SDL2_INCLUDE_DIR SDL.h
 )
 
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-  set(VC_LIB_PATH_SUFFIX lib/x64)
+  set(PATH_SUFFIXES lib64 lib/x64 lib)
 else()
-  set(VC_LIB_PATH_SUFFIX lib/x86)
+  set(PATH_SUFFIXES lib/x86 lib)
 endif()
 
 find_library(SDL2_LIBRARY_TEMP
   NAMES SDL2
   HINTS
     ENV SDL2DIR
-  PATH_SUFFIXES lib64 lib
+  PATH_SUFFIXES ${PATH_SUFFIXES}
   PATHS ${SDL2_SEARCH_PATHS}
 )
 
@@ -125,7 +125,7 @@ if(NOT SDL2_BUILDING_LIBRARY)
       NAMES SDL2main
       HINTS
         ENV SDL2DIR
-      PATH_SUFFIXES lib64 lib
+      PATH_SUFFIXES ${PATH_SUFFIXES}
       PATHS ${SDL2_SEARCH_PATHS}
     )
   endif()
@@ -139,11 +139,10 @@ if(NOT APPLE)
   find_package(Threads)
 endif()
 
-# MinGW needs an additional library, mwindows
-# It's total link flags should look like -lmingw32 -lSDL2main -lSDL2 -lmwindows
-# (Actually on second look, I think it only needs one of the m* libraries.)
+# MinGW needs an additional link flag, -mwindows
+# It's total link flags should look like -lmingw32 -lSDL2main -lSDL2 -mwindows
 if(MINGW)
-  set(MINGW32_LIBRARY mingw32 CACHE STRING "mwindows for MinGW")
+  set(MINGW32_LIBRARY mingw32 "-mwindows" CACHE STRING "mwindows for MinGW")
 endif()
 
 if(SDL2_LIBRARY_TEMP)
