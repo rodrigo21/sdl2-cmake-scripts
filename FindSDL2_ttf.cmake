@@ -39,22 +39,22 @@ find_path(SDL2_TTF_INCLUDE_DIR SDL_ttf.h
   PATH_SUFFIXES SDL2
   # path suffixes to search inside ENV SDL2DIR
   include/SDL2 include
-  PATHS ${SDL2_PATH}
+  PATHS ${SDL2_TTF_PATH}
 )
 
-if (CMAKE_SIZEOF_VOID_P EQUAL 8)
-  set(VC_LIB_PATH_SUFFIX lib/x64)
-else ()
-  set(VC_LIB_PATH_SUFFIX lib/x86)
-endif ()
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+  set(PATH_SUFFIXES lib64 lib/x64 lib)
+else()
+  set(PATH_SUFFIXES lib/x86 lib)
+endif()
 
 find_library(SDL2_TTF_LIBRARY
   NAMES SDL2_ttf
   HINTS
     ENV SDL2TTFDIR
     ENV SDL2DIR
-  PATH_SUFFIXES lib ${VC_LIB_PATH_SUFFIX}
-  PATHS ${SDL2_PATH}
+  PATH_SUFFIXES ${PATH_SUFFIXES}
+  PATHS ${SDL2_TTF_PATH}
 )
 
 if(SDL2_TTF_INCLUDE_DIR AND EXISTS "${SDL2_TTF_INCLUDE_DIR}/SDL_ttf.h")

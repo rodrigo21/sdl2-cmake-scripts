@@ -37,14 +37,15 @@ find_path(SDL2_GFX_INCLUDE_DIR SDL2_gfxPrimitives.h
     ENV SDL2GFXDIR
     ENV SDL2DIR
   PATH_SUFFIXES SDL2
-                # path suffixes to search inside ENV{SDL2DIR}
-                include/SDL2 include
+  # path suffixes to search inside ENV SDL2DIR
+  include/SDL2 include
+  PATHS ${SDL2_GFX_PATH}
 )
 
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-  set(VC_LIB_PATH_SUFFIX lib/x64)
+  set(PATH_SUFFIXES lib64 lib/x64 lib)
 else()
-  set(VC_LIB_PATH_SUFFIX lib/x86)
+  set(PATH_SUFFIXES lib/x86 lib)
 endif()
 
 find_library(SDL2_GFX_LIBRARY
@@ -52,7 +53,8 @@ find_library(SDL2_GFX_LIBRARY
   HINTS
     ENV SDL2GFXDIR
     ENV SDL2DIR
-  PATH_SUFFIXES lib ${VC_LIB_PATH_SUFFIX}
+  PATH_SUFFIXES ${PATH_SUFFIXES}
+  PATHS ${SDL2_GFX_PATH}
 )
 
 if(SDL2_GFX_INCLUDE_DIR AND EXISTS "${SDL2_GFX_INCLUDE_DIR}/SDL2_gfxPrimitives.h")
